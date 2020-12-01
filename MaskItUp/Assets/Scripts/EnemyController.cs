@@ -12,6 +12,7 @@ public class EnemyController : MonoBehaviour
     public Transform Target;
     public GameManager GM;
     public PlayerController player;
+    public Transform Back;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +24,7 @@ public class EnemyController : MonoBehaviour
         Target = GameObject.FindGameObjectWithTag("Player").transform;
         navA = GetComponent<NavMeshAgent>();
         navA.SetDestination(Target.position);
+        Back = GameObject.FindGameObjectWithTag("Back").transform;
     }
 
     // Update is called once per frame
@@ -46,7 +48,7 @@ public class EnemyController : MonoBehaviour
     IEnumerator WaitSec()
     {
         yield return new WaitForSeconds(1);
-        gameObject.transform.position = Vector3.zero;
+        gameObject.transform.position = Back.position;
         navA.SetDestination(transform.position);
     }
 }

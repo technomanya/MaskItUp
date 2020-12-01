@@ -11,6 +11,7 @@ TagManager:
   - Gun
   - GunPivot
   - GameManager
+  - Back
   layers:
   - Default
   - TransparentFX
