@@ -7,20 +7,26 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public PlayerController pControl;
-
-    public GameObject GameOverPanel;
-    public GameObject WinText;
-    public GameObject LoseText;
+    public LevelManager lvlManager;
 
     [SerializeField] private int enemyCount;
     public int MaskedEnemy;
 
     private GameObject[] Enemies;
+    
+
+    [Header("UI Elements")]
+    public GameObject GameOverPanel;
+    public GameObject WinText;
+    public GameObject LoseText;
+
+    
 
 
     void Awake()
     {
         pControl = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        lvlManager = GetComponent<LevelManager>();
     }
     // Start is called before the first frame update
     void Start()
@@ -34,8 +40,9 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (MaskedEnemy == enemyCount)
+        if (MaskedEnemy == enemyCount && lvlManager.isGameRun)
         {
+            lvlManager.isGameRun = false;
             GameOver(true);
         }
     }
@@ -46,6 +53,7 @@ public class GameManager : MonoBehaviour
         {
             WinText.SetActive(true);
             LoseText.SetActive(false);
+            lvlManager.NewLevel();
         }
         else
         {
@@ -64,5 +72,10 @@ public class GameManager : MonoBehaviour
     {
         var scene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(scene.name);
+    }
+
+    public void Save()
+    {
+        PlayerPrefs.SetString("SavedLevel", lvlManager.levelName);
     }
 }

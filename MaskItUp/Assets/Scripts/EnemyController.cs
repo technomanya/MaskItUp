@@ -23,14 +23,14 @@ public class EnemyController : MonoBehaviour
 
         Target = GameObject.FindGameObjectWithTag("Player").transform;
         navA = GetComponent<NavMeshAgent>();
-        navA.SetDestination(Target.position);
+        
         Back = GameObject.FindGameObjectWithTag("Back").transform;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        navA.SetDestination(Target.position);
     }
 
     public void MaskUp()
