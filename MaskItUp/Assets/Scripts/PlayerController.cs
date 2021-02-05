@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     private List<GameObject> throwMaskList = new List<GameObject>();
     private GameObject CurrentMask;
     private GameObject BeforeMask;
-    private bool _thrown;
+    public bool _thrown;
     private int maskId = 0;
     public float _mouseX, _mouseY, _mouseZ;
     public float ForwardForce;
@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
     public List<Transform> nearEnemyList;
 
     private Vector3 lookAtVector;
-    private float counter;
+    public float counter;
 
 
     // Start is called before the first frame update
@@ -74,55 +74,55 @@ public class PlayerController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        if(nearEnemyList.Count > 0)
-        {
-            nearestEnemy = nearEnemyList[0];
-            if(nearestEnemy != null)
-            {
-                var dir = nearestEnemy.position - transform.position;
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(dir),
-                    Time.deltaTime * RotateAngle);
-            }
-        }
+    //void Update()
+    //{
+    //    if(nearEnemyList.Count > 0)
+    //    {
+    //        nearestEnemy = nearEnemyList[0];
+    //        if(nearestEnemy != null)
+    //        {
+    //            var dir = nearestEnemy.position - transform.position;
+    //            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(dir),
+    //                Time.deltaTime * RotateAngle);
+    //        }
+    //    }
 
-        //gameObject.transform.Rotate(Vector3.up, Input.GetAxis("Horizontal")*RotateAngle);
+    //    //gameObject.transform.Rotate(Vector3.up, Input.GetAxis("Horizontal")*RotateAngle);
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            RaycastHit hit;
-            Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
-            Debug.Log(ray.direction);
+    //    if (Input.GetMouseButtonDown(0))
+    //    {
+    //        RaycastHit hit;
+    //        Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
+    //        Debug.Log(ray.direction);
             
-            _mouseX = ray.direction.x;
-            _mouseY = ray.direction.y;
-            _mouseZ = ray.direction.z;
+    //        _mouseX = ray.direction.x;
+    //        _mouseY = ray.direction.y;
+    //        _mouseZ = ray.direction.z;
 
-            //Debug.Log("Y: " + ray.direction.y + " X: " + ray.direction.x + " Z: " + ray.direction.z);
-            //gun.transform.LookAt(mousePosDiff, Vector3.up);
-            gun.transform.localEulerAngles = new Vector3(_mouseY * -GunAngle, _mouseX * GunAngle, 0);
+    //        //Debug.Log("Y: " + ray.direction.y + " X: " + ray.direction.x + " Z: " + ray.direction.z);
+    //        //gun.transform.LookAt(mousePosDiff, Vector3.up);
+    //        gun.transform.localEulerAngles = new Vector3(_mouseY * -GunAngle, _mouseX * GunAngle, 0);
 
-            counter = Time.timeSinceLevelLoad;
-            _thrown = true;
-            Throw();
+    //        counter = Time.timeSinceLevelLoad;
+    //        _thrown = true;
+    //        Throw();
             
 
-            //if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-            //{
-            //    if (hit.collider.CompareTag("Enemy"))
-            //    {
-            //        hit.collider.GetComponent<EnemyController>().MaskUp();
-            //    }
-            //    else if (hit.collider.CompareTag("Friend"))
-            //    {
-            //        Debug.Log("WRONG!");
-            //    }
-            //    Debug.Log("Did Hit");
-            //}
+    //        //if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+    //        //{
+    //        //    if (hit.collider.CompareTag("Enemy"))
+    //        //    {
+    //        //        hit.collider.GetComponent<EnemyController>().MaskUp();
+    //        //    }
+    //        //    else if (hit.collider.CompareTag("Friend"))
+    //        //    {
+    //        //        Debug.Log("WRONG!");
+    //        //    }
+    //        //    Debug.Log("Did Hit");
+    //        //}
 
-        }
-    }
+    //    }
+    //}
 
     void FixedUpdate()
     {
@@ -140,8 +140,9 @@ public class PlayerController : MonoBehaviour
             sabitMask.SetActive(true);
     }       
 
-    void Throw()
+    public void Throw(Vector3 direction)
     {
+        Debug.Log(direction);
         BeforeMask = CurrentMask;
         var beginPos = BeforeMask.transform.position;
 
@@ -152,7 +153,7 @@ public class PlayerController : MonoBehaviour
         sabitMask.SetActive(false);
         Hand.SetTrigger("Shoot");
         BeforeMask.GetComponent<Rigidbody>().isKinematic = false;
-        BeforeMask.GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * ForwardForce, ForceMode.Impulse);
+        BeforeMask.GetComponent<Rigidbody>().AddForce(direction * ForwardForce, ForceMode.VelocityChange);
 
 
         if (maskId >= throwingMasks.Length - 1)

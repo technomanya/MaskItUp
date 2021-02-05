@@ -11,7 +11,7 @@ public class EnemyController : MonoBehaviour
 
     public Transform Target;
     public GameManager GM;
-    public PlayerController player;
+    public PlayerAIM player;
     public Transform Back;
 
     // Start is called before the first frame update
@@ -19,7 +19,7 @@ public class EnemyController : MonoBehaviour
     {
 
         GM = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        player = GameObject.FindGameObjectWithTag("GunPivot").GetComponent<PlayerAIM>();
 
         Target = GameObject.FindGameObjectWithTag("Player").transform;
         navA = GetComponent<NavMeshAgent>();
@@ -49,6 +49,7 @@ public class EnemyController : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         gameObject.transform.position = Back.position;
-        navA.SetDestination(transform.position);
+        //navA.SetDestination(transform.position);
+        Destroy(gameObject);
     }
 }
