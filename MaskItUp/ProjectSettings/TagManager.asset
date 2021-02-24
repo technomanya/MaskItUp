@@ -5,6 +5,17 @@ TagManager:
   serializedVersion: 2
   tags:
   - Obstacle
+  - PlayerPose
+  - Enemy
+  - GunPivot
+  - Back
+  - GameManager
+  - Mask
+  - ThrowMask
+  - Friend
+  - Cut
+  - Draw
+  - ObjectPool
   layers:
   - Default
   - TransparentFX
@@ -39,6 +50,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: UI
+    uniqueID: 410544587
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

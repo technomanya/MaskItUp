@@ -50,6 +50,7 @@ public class EnemyController : MonoBehaviour
         yield return new WaitForSeconds(1);
         gameObject.transform.position = Back.position;
         //navA.SetDestination(transform.position);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+        //Destroy(gameObject);
     }
 }

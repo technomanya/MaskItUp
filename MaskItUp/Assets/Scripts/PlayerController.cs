@@ -73,71 +73,71 @@ public class PlayerController : MonoBehaviour
         nearestEnemy = null;
     }
 
-    // Update is called once per frame
-    //void Update()
-    //{
-    //    if(nearEnemyList.Count > 0)
-    //    {
-    //        nearestEnemy = nearEnemyList[0];
-    //        if(nearestEnemy != null)
-    //        {
-    //            var dir = nearestEnemy.position - transform.position;
-    //            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(dir),
-    //                Time.deltaTime * RotateAngle);
-    //        }
-    //    }
+     //Update is called once per frame
+    void Update()
+    {
+        if(nearEnemyList.Count > 0)
+        {
+            nearestEnemy = nearEnemyList[0];
+            if(nearestEnemy != null)
+            {
+                var dir = nearestEnemy.position - transform.position;
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(dir),
+                    Time.deltaTime * RotateAngle);
+            }
+        }
 
-    //    //gameObject.transform.Rotate(Vector3.up, Input.GetAxis("Horizontal")*RotateAngle);
+        //gameObject.transform.Rotate(Vector3.up, Input.GetAxis("Horizontal")*RotateAngle);
 
-    //    if (Input.GetMouseButtonDown(0))
-    //    {
-    //        RaycastHit hit;
-    //        Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
-    //        Debug.Log(ray.direction);
+        if (Input.GetMouseButtonDown(0))
+        {
+            RaycastHit hit;
+            Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
+            Debug.Log(ray.direction);
             
-    //        _mouseX = ray.direction.x;
-    //        _mouseY = ray.direction.y;
-    //        _mouseZ = ray.direction.z;
+            _mouseX = ray.direction.x;
+            _mouseY = ray.direction.y;
+            _mouseZ = ray.direction.z;
 
-    //        //Debug.Log("Y: " + ray.direction.y + " X: " + ray.direction.x + " Z: " + ray.direction.z);
-    //        //gun.transform.LookAt(mousePosDiff, Vector3.up);
-    //        gun.transform.localEulerAngles = new Vector3(_mouseY * -GunAngle, _mouseX * GunAngle, 0);
+            //Debug.Log("Y: " + ray.direction.y + " X: " + ray.direction.x + " Z: " + ray.direction.z);
+            //gun.transform.LookAt(mousePosDiff, Vector3.up);
+            gun.transform.localEulerAngles = new Vector3(_mouseY * -GunAngle, _mouseX * GunAngle, 0);
 
-    //        counter = Time.timeSinceLevelLoad;
-    //        _thrown = true;
-    //        Throw();
+            counter = Time.timeSinceLevelLoad;
+            _thrown = true;
+            //Throw();
             
 
-    //        //if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-    //        //{
-    //        //    if (hit.collider.CompareTag("Enemy"))
-    //        //    {
-    //        //        hit.collider.GetComponent<EnemyController>().MaskUp();
-    //        //    }
-    //        //    else if (hit.collider.CompareTag("Friend"))
-    //        //    {
-    //        //        Debug.Log("WRONG!");
-    //        //    }
-    //        //    Debug.Log("Did Hit");
-    //        //}
+            //if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+            //{
+            //    if (hit.collider.CompareTag("Enemy"))
+            //    {
+            //        hit.collider.GetComponent<EnemyController>().MaskUp();
+            //    }
+            //    else if (hit.collider.CompareTag("Friend"))
+            //    {
+            //        Debug.Log("WRONG!");
+            //    }
+            //    Debug.Log("Did Hit");
+            //}
 
-    //    }
-    //}
+        }
+    }
 
     void FixedUpdate()
     {
-        if(_thrown)
-        {
-            sabitMask.SetActive(false);
-            if (Time.timeSinceLevelLoad-counter > 0.3f)
-            {
-                _thrown = false;
-                counter = 0;
-            }
+    //    if(_thrown)
+    //    {
+    //        sabitMask.SetActive(false);
+    //        if (Time.timeSinceLevelLoad-counter > 0.3f)
+    //        {
+    //            _thrown = false;
+    //            counter = 0;
+    //        }
             
-        }
-        if(!_thrown)
-            sabitMask.SetActive(true);
+    //    }
+    //    if(!_thrown)
+    //        sabitMask.SetActive(true);
     }       
 
     public void Throw(Vector3 direction)
